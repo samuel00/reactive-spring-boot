@@ -79,16 +79,16 @@ public class CervejaRouterTest {
                 .expectStatus().isOk()
                 .expectBodyList(Cerveja.class)
                 .value(userResponse -> {
-                            Assertions.assertThat(userResponse.get(0).getId()).isEqualTo(1);
+                            Assertions.assertThat(userResponse.get(0).getId()).isEqualTo("1L");
                             Assertions.assertThat(userResponse.get(0).getNome()).isEqualTo("Baden Baden");
-                            Assertions.assertThat(userResponse.get(1).getId()).isEqualTo(2);
+                            Assertions.assertThat(userResponse.get(1).getId()).isEqualTo("2L");
                             Assertions.assertThat(userResponse.get(1).getNome()).isEqualTo("Colorado");
                         }
                 );
     }
 
     @Test
-    public void testCreateUser() {
+    public void testeCriaCerveja() {
 
         Cerveja cerveja = new Cerveja(null, "Perola Negra", "Perola Negra", "Larger");
         Mono<Cerveja> cervejaMono = Mono.just(cerveja);
@@ -100,7 +100,7 @@ public class CervejaRouterTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .body(Mono.just(cerveja), Cerveja.class)
                 .exchange()
-                .expectStatus().isOk()
+                .expectStatus().isCreated()
                 .expectBody(Cerveja.class)
                 .value(userResponse -> {
                             Assertions.assertThat(userResponse.getId()).isNull();
@@ -109,6 +109,49 @@ public class CervejaRouterTest {
                         }
                 );
     }
+
+    @Test
+    public void testeAtualizaCerveja() {
+
+        Cerveja cerveja = new Cerveja("123-456", "Perola Negra", "Perola Negra", "Larger");
+        Cerveja cervejaAtualizada = new Cerveja("123-456", "Paysandu", "Cerpa", "Pielsen");
+        Mono<Cerveja> cervejaMono = Mono.just(cerveja);
+        Mono<Cerveja> cervejaMonoAtualizada = Mono.just(cervejaAtualizada);
+        when(this.cervejaRepositorio.save(any())).thenReturn(cervejaMonoAtualizada);
+        when(this.cervejaRepositorio.findById("123-456")).thenReturn(cervejaMono);
+
+        webTestClient.put()
+                .uri("/cerveja/123-456")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.just(cerveja), Cerveja.class)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Cerveja.class)
+                .value(userResponse -> {
+                            Assertions.assertThat(userResponse.getId()).isEqualTo("123-456");
+                            Assertions.assertThat(userResponse.getNome()).isEqualTo("Paysandu");
+                            Assertions.assertThat(userResponse.getTipo()).isEqualTo("Pielsen");
+                        }
+                );
+    }
+
+    @Test
+    public void testeDeletaCerveja() {
+
+        Cerveja cerveja = new Cerveja("123-456", "Perola Negra", "Perola Negra", "Larger");
+        Mono<Cerveja> cervejaMono = Mono.just(cerveja);
+        when(this.cervejaRepositorio.findById("123-456")).thenReturn(cervejaMono);
+        //doNothing().when(this.cervejaRepositorio).delete(any());
+        when(this.cervejaRepositorio.delete(any())).thenReturn(Mono.empty());
+
+        webTestClient.delete()
+                .uri("/cerveja/123-456")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isNoContent();
+    }
+
 
     @Test
     public void testando() throws InterruptedException {
