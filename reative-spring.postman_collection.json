@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "502a2ba5-5fef-4588-b20b-902522411ba5",
+		"name": "reative-spring",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST Cerveja",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nome\":\"Tijuca\",\n\t\"fabricante\":\"Cerpa\",\n\t\"tipo\":\t\"Pielsen\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/cerveja",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cerveja"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Cerveja",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nome\":\"Cerpa Export\",\n\t\"fabricante\":\"Cerpa\",\n\t\"tipo\":\t\"Pielsen\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/cerveja/5dc0c2b258228c52496cd203",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cerveja",
+						"5dc0c2b258228c52496cd203"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Cerveja",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/cerveja/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cerveja",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Cerveja Por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/cerveja/5dc0c2b258228c52496cd203",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cerveja",
+						"5dc0c2b258228c52496cd203"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Cerveja",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/cerveja/5dc30f172b5c45160a70a329",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cerveja",
+						"5dc30f172b5c45160a70a329"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
